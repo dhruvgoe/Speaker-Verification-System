@@ -66,7 +66,7 @@ Speaker identified.
 Or:
 
 ```
-Log-likelihood for Test-positive.wav: -35.892
+Log-likelihood for Test-negative.wav: -35.892
 Speaker not identified.
 ```
 
@@ -74,7 +74,7 @@ Speaker not identified.
 
 This project utilizes the [Speaker Recognition Audio Dataset](https://www.kaggle.com/datasets/vjcalling/speaker-recognition-audio-dataset) from Kaggle. This dataset contains audio samples from multiple speakers, providing a diverse range of vocal characteristics for training and evaluation.
 
-For this specific implementation, the model is trained using voice samples from a *single* target speaker within this dataset.  The audio files for this target speaker are located within their designated folder in the dataset.  The specific speaker ID used for training can be configured within the `speaker_recognition.py` script by adjusting the path to the speaker's directory.
+For this specific implementation, the model is trained using voice samples from a *single* target speaker within this dataset.  The audio files for this target speaker are located within their designated folder in the dataset.  The specific speaker ID used for training can be configured within the `Detection.py` script by adjusting the path to the speaker's directory.
 
 Negative samples, representing impostor speakers, were also drawn from the same Kaggle dataset.  Specifically, audio samples from *different* speakers (i.e., speakers *other* than the target speaker) were used as negative examples.  The specific files used as negative samples are defined in the main directory of project variable within the script.
 
