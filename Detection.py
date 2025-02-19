@@ -1,7 +1,8 @@
 import librosa
 import numpy as np
-from sklearn.mixture import GaussianMixture
+import joblib
 import os
+from sklearn.mixture import GaussianMixture
 from sklearn.model_selection import KFold
 from sklearn.metrics import roc_curve, auc
 from sklearn.preprocessing import StandardScaler
@@ -86,13 +87,14 @@ def evaluate_model(speaker_model, scaler, positive_samples, negative_samples):
     else:
         return None, None, None
 
-# Example usage:
+# Define dataset directory
 data_dir = "./dataset"
 audio_files = [os.path.join(data_dir, f) for f in os.listdir(data_dir) if f.endswith(".wav")]
 
 test_positive_files = [os.path.join(data_dir, f) for f in os.listdir(data_dir) if f.endswith(".wav") and 'Speaker0041' in f]
 test_negative_files = ["Test-negative1.wav", "Test-negative2.wav", "Test-negative3.wav"]
 
+# Cross-validation setup
 kf = KFold(n_splits=3, shuffle=True, random_state=42)
 best_auc = 0
 best_model = None
@@ -116,6 +118,11 @@ if best_model is None:
     print("Model training failed.")
     exit()
 
+# Save the best model and scaler
+joblib.dump(best_model, "speaker_model.pkl")
+joblib.dump(best_scaler, "scaler.pkl")
+print("Model and scaler saved successfully.")
+
 # Evaluate on the held-out test set
 roc_auc, eer, threshold = evaluate_model(best_model, best_scaler, test_positive_files, test_negative_files)
 if roc_auc is not None:
@@ -124,7 +131,7 @@ else:
     print("Evaluation failed.")
 
 # Example of making a prediction:
-test_audio = "Test-positive.wav"
+test_audio = "Test-negative2.wav"
 log_likelihood = identify_speaker(test_audio, best_model, best_scaler)
 if log_likelihood is not None:
     print(f"Log-likelihood for {test_audio}: {log_likelihood}")
