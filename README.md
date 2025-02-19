@@ -12,9 +12,9 @@ During verification, the system compares the likelihood of a given audio sample 
 
 To get this project running on your machine, follow these installation instructions:
 
-(1) Clone the Repository: git clone https://github.com/dhruvgoe/Speaker-Identification-.git
+(1) Clone the Repository: git clone https://github.com/dhruvgoe/Speaker-Verification-System.git
 
-(2) Navigate to the project directory: cd Speaker-Identification-
+(2) Navigate to the project directory: cd Speaker-Verification-System
 
 (3) Install the required dependencies: pip install -r requirements.txt
 
@@ -23,10 +23,10 @@ To get this project running on your machine, follow these installation instructi
 
 **(1) Training Speaker Models:**
 
-Before verifying speakers, you must train GMMs for each enrolled speaker. Use the `speaker_recognition.py` script for this.
+Before verifying speakers, you must train GMMs for each enrolled speaker. Use the `Detection.py` script for this.
 
 ```bash
-python speaker_recognition.py --data_dir ./dataset --negative_files Test-negative1.wav Test-negative2.wav Test-negative3.wav --n_components 8 --reg_covar 0.01
+python Detection.py --data_dir ./dataset --negative_files Test-negative1.wav Test-negative2.wav Test-negative3.wav --n_components 8 --reg_covar 0.01
 ```
 Details:
 
@@ -43,7 +43,7 @@ Details:
 After training, verify a speaker's identity using the same script.
 
 ```
-python speaker_recognition.py --test_audio Test-positive.wav --model_file speaker_models.pkl --scaler_file scaler.pkl --threshold 0.5
+python Detection.py --test_audio Test-positive.wav --model_file speaker_models.pkl --scaler_file scaler.pkl --threshold 0.5
 ```
 Details: 
 * --test_audio: Path to the audio file to verify. Required.
